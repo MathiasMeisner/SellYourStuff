@@ -40,7 +40,7 @@ const categories = [
   {
     backgroundColor: "#26de81",
     icon: "cards",
-    label: "Games",
+    label: "Games & Toys",
     value: 4,
   },
   {
