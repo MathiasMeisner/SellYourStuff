@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import colors from "../config/colors";
 import listingsApi from "../api/listings";
 
-function ListingScreen(props) {
+function ListingScreen({ navigation }) {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ function ListingScreen(props) {
             title={item.title}
             subTitle={"$" + item.price}
             imageUrl={item.images[0].url}
+            onPress={() => navigation.navigate("ListingDetails", item)}
           />
         )}
       />
