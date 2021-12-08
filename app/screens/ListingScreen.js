@@ -5,21 +5,32 @@ import Screen from "../components/Screen";
 import Card from "../components/Card";
 import colors from "../config/colors";
 import listingsApi from "../api/listings";
+import AppText from "../components/AppText";
+import AppButton from "../components/AppButton";
+import ActivityIndicator from "../components/ActivityIndicator";
+import useApi from "../hooks/useApi";
 
 function ListingScreen({ navigation }) {
-  const [listings, setListings] = useState([]);
+  const {
+    request: loadListings,
+    data: listings,
+    error,
+    loading,
+  } = useApi(listingsApi.getListings);
 
   useEffect(() => {
     loadListings();
   }, []);
 
-  const loadListings = async () => {
-    const response = await listingsApi.getListings();
-    setListings(response.data);
-  };
-
   return (
     <Screen style={styles.screen}>
+      {error && (
+        <>
+          <AppText>Could not load the listings.</AppText>
+          <AppButton title="Retry" onPress={loadListings} />
+        </>
+      )}
+      <ActivityIndicator visible={loading} />
       <FlatList
         data={listings}
         keyExtractor={(listings) => listings.id.toString()}
@@ -39,8 +50,11 @@ function ListingScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     padding: 10,
+    paddingTop: 10,
     backgroundColor: colors.light,
   },
 });
+
+console.disableYellowBox = true;
 
 export default ListingScreen;
