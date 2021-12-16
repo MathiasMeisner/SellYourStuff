@@ -10,15 +10,15 @@ import Screen from "../components/Screen";
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title: "Test message title",
+    description: "Test message content",
     image: require("../assets/mathias.jpg"),
   },
 
   {
     id: 2,
-    title: "T2",
-    description: "D2",
+    title: "Test message title",
+    description: "Test message content",
     image: require("../assets/mathias.jpg"),
   },
 ];

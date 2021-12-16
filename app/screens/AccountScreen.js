@@ -7,6 +7,7 @@ import Screen from "../components/Screen";
 import ListItem from "../components/lists/ListItem";
 import ListItemSeperatorComponent from "../components/lists/ListItemSeperator";
 import Icon from "../components/Icon";
+import useAuth from "../auth/useAuth";
 
 const menuItems = [
   {
@@ -15,6 +16,7 @@ const menuItems = [
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
+    targetScreen: "Listings",
   },
   {
     title: "My Messages",
@@ -27,12 +29,14 @@ const menuItems = [
 ];
 
 function AccountScreen({ navigation }) {
+  const { user, logOut } = useAuth();
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title="Mathias Meisner"
-          subTitle="mathias.meisner@gmail.com"
+          title={user.name}
+          subTitle={user.email}
           image={require("../assets/mathias.jpg")}
         />
       </View>
@@ -58,6 +62,7 @@ function AccountScreen({ navigation }) {
       <ListItem
         title="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+        onPress={() => logOut()}
       />
     </Screen>
   );

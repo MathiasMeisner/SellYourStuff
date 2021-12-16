@@ -1,19 +1,36 @@
 import React from "react";
-import { Image, View, StyleSheet } from "react-native";
-import AppText from "../components/AppText";
+import {
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from "react-native";
+import { Image } from "react-native-expo-image-cache";
 
+import AppText from "../components/AppText";
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
+import ContactSellerForm from "../components/ContactSellerForm";
 
 function ListingDetailsScreen({ route }) {
   const listing = route.params;
 
   return (
-    <View>
-      <Image style={styles.image} source={listing.image} />
+    <KeyboardAvoidingView
+      behavior="position"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
+    >
+      <Image
+        style={styles.image}
+        preview={{ uri: listing.images[0].thumbnailUrl }}
+        tint="light"
+        uri={listing.images[0].url}
+      />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{listing.title}</AppText>
         <AppText style={styles.price}>${listing.price}</AppText>
+        <AppText style={styles.description}>{listing.description}</AppText>
         <View style={styles.userContainer}>
           <ListItem
             image={require("../assets/mathias.jpg")}
@@ -21,14 +38,19 @@ function ListingDetailsScreen({ route }) {
             subTitle="5 Listings"
           />
         </View>
+        <ContactSellerForm listing={listing} />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   detailsContainer: {
     padding: 20,
+  },
+
+  description: {
+    fontSize: 15,
   },
 
   image: {
@@ -40,7 +62,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontSize: 20,
     fontWeight: "bold",
-    marginVertical: 10,
+    marginVertical: 5,
   },
 
   title: {
@@ -49,7 +71,7 @@ const styles = StyleSheet.create({
   },
 
   userContainer: {
-    marginVertical: 40,
+    marginVertical: 8,
   },
 });
 
